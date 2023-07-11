@@ -29,11 +29,40 @@ appBodegas.get('/', (req, res) => {
                 console.log(err);
                 res.status(400).send(err);
             }else{
-                console.log(data);
                 res.status(200).send(data);
             }
         }
     )
 })
+
+appBodegas.post('/', (req, res)=>{
+    const {id, nombre,estado,id_responsable,created_at,updated_at} = req.body;
+    con.query(
+        /*sql*/`SELECT id FROM users WHERE id = ?`,
+        [id_responsable],
+        (err,data)=>{
+            if(err){
+                res.status(513).send("no se puedo socio");
+            }else if(data.length === 0){
+                res.status(513).send("no se puedo socio, el usuario no existe")
+            }else{
+                con.query(
+                    /*sql*/`INSERT INTO bodegas(id, nombre, id_responsable,  estado, created_at, updated_at) VALUES (?,?,?,?,?,?)`,
+                    [id, nombre, id_responsable, estado, created_at, updated_at],
+                    (err,data)=>{
+                        if(err){
+                            console.log(err);
+                            res.status(520).send("dsfdsf")
+                        }else{
+                            console.log(data);
+                            res.status(200).send("usuario guardado")
+                        }
+                    }
+                )
+            }
+        }
+    )
+})
+
 
 export default appBodegas;

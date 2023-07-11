@@ -9,7 +9,7 @@ app.use("/bodegas", appBodegas);
 
 const config = {
     host: '127.12.11.1',
-    port: 4501
+    port: 4504
 }
 
 app.listen(config, ()=>{
